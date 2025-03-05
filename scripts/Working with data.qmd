@@ -1,0 +1,95 @@
+---
+title: "Working with data"
+format: 
+html: 
+self contained: true
+editor: visual
+---
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+library(descr)
+```
+
+```{r}
+library(knitr)
+```
+
+```{r}
+library(dplyr)
+```
+
+```{r}
+library(haven)
+```
+
+```{r}
+file_path <- file.path("..", "data", "36168-0001-Data.sav")
+df <- read_sav(file_path)
+```
+
+```{r}
+library(descr)
+```
+
+DATA TABLE
+
+```{r}
+head(df)
+```
+
+FREQ
+
+```{r}
+freq(as.ordered(df$SEX), plot = FALSE)
+```
+
+This table shows that more female participants went through abuse that men.
+
+```{r}
+freq(as.ordered(df$MOODDX), plot = FALSE)
+```
+
+This table shows the amount of people with mood disorders and there are more people with than without.
+
+```{r}
+freq(as.ordered(df$RACE), plot = FALSE)
+```
+
+This table shows the amount of white, black and other races that went through abuse. White participants were shown to be the ones to go through abuse.
+
+```{r}
+
+```
