@@ -1,0 +1,24 @@
+---
+title: "Data Manegement"
+format: 
+html:
+self-contained: true
+toc: true
+pdf:
+number-sections: true
+toc: true
+pdf-engine: xelatex
+editor: visual
+---
+
+```{r}
+head (df)
+```
+
+```{r}
+df$RACE[df$RACE == 9 ]
+```
+
+```{r}
+df$RACE[is.na(df$RACE)]
+```
