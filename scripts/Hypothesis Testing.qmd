@@ -79,3 +79,20 @@ summary(aov_age_sex)
 ```
 
 This shows that there is no significant correlation between sex and age of people affected by abuse.
+
+Correlation
+
+```{r}
+cor.test(df$age, df$scl_gsi, use = "complete.obs")
+```
+
+```{r}
+ggplot(data = df, aes(x = age, y = scl_gsi)) + 
+  geom_point(color = "purple") +
+  theme_bw() +
+  labs(x = "Participant Age (years)", y = "Global Severity Index (scl_gsi)") +
+  stat_smooth(method = lm)
+
+```
+
+There's no real link between age and psychological distress
