@@ -1,0 +1,32 @@
+---
+title: "Hypothesis Testing"
+format: html
+editor: visual
+---
+
+## Chi-Squared 
+
+```{r}
+table(df$sex)
+table(df$dx)
+```
+
+```{r}
+table(df$sex, df$dx)
+```
+
+```{r}
+chisq.test(table(df$sex, df$dx))
+```
+
+```{r}
+table(df$sex, df$abuse)
+chisq.test(table(df$sex, df$abuse))
+
+```
+
+```{r}
+df <- df %>%
+  mutate(abuse = as.factor(abuse))
+
+```
