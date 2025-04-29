@@ -61,3 +61,5 @@ ggplot(df, aes(x = age)) +
   ) +
   theme_minimal()
 ```
+
+People affected by abuse mostly have effects ages 30 and 40.
