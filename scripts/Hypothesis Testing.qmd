@@ -30,3 +30,34 @@ df <- df %>%
   mutate(abuse = as.factor(abuse))
 
 ```
+
+T-Test
+
+```{r}
+t.test(age ~ sex, data = df)
+```
+
+```{r}
+df <- df %>%
+  mutate(
+    sex = as.factor(sex),
+    abuse = as.factor(abuse)
+  )
+```
+
+```{r}
+t.test(df$age, mu = 30)
+
+```
+
+```{r}
+ggplot(df, aes(x = age)) +
+  geom_histogram(binwidth = 2, fill = "#69b3a2", alpha = 0.7, color = "white") +
+  geom_vline(xintercept = 30, linetype = "dashed", color = "red", size = 1.2) +
+  labs(
+    title = "Age Distribution",
+    x = "Age",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
