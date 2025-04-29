@@ -1,0 +1,36 @@
+---
+title: "univariate"
+format: html
+editor: visual
+---
+
+```{r}
+install.packages("e1071")
+```
+
+First Graph representing race
+
+```{r}
+ggplot(df, aes(x = race)) + geom_bar()
+```
+
+```{r}
+ggplot(df, aes(x = race, y = age)) +
+  geom_jitter(width = 0.2, alpha = 0.6) +
+  labs(title = "Age by Race", x = "Race", y = "Age") +
+  theme_minimal()
+```
+
+Second graph representing age
+
+```{r}
+ggplot(df, aes(x = age)) + geom_bar()
+```
+
+```{r}
+ggplot(df, aes(x = age, y = scl_gsi)) +
+  geom_point(alpha = 0.6) +
+  labs(title = "Age vs. Global Severity Index (SCL-GSI)", x = "Age", y = "SCL-GSI") +
+  theme_minimal()
+
+```
