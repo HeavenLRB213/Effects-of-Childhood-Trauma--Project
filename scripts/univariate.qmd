@@ -21,6 +21,8 @@ ggplot(df, aes(x = race, y = age)) +
   theme_minimal()
 ```
 
+This graph shows the correlation of trauma across race and age. It is clustered in certain age and race, but shows its equally distributed.
+
 Second graph representing age
 
 ```{r}
@@ -34,3 +36,5 @@ ggplot(df, aes(x = age, y = scl_gsi)) +
   theme_minimal()
 
 ```
+
+For this graph, it shows the correlation between age and the variable for psychological distress. The points upward show distress, and down show otherwise.
