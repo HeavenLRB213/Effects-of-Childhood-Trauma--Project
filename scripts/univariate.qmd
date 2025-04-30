@@ -1,6 +1,10 @@
 ---
 title: "univariate"
-format: html
+format: 
+ pdf:
+  number-sections: true
+  toc: true
+  pdf-engine: xelatex
 editor: visual
 ---
 

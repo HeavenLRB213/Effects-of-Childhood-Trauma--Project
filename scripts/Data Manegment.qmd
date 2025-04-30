@@ -1,13 +1,10 @@
 ---
 title: "Data Manegement"
 format: 
-html:
-self-contained: true
-toc: true
-pdf:
-number-sections: true
-toc: true
-pdf-engine: xelatex
+ pdf:
+  number-sections: true
+  toc: true
+  pdf-engine: xelatex
 editor: visual
 ---
 
@@ -16,21 +13,21 @@ head (df)
 ```
 
 ```{r}
-df$RACE[df$RACE == 9 ]
+#df$RACE[df$RACE == 9 ]
 ```
 
 ```{r}
-df$RACE[df$RACE == 1 | df$RACE == 2 | df$RACE == 3 | df$RACE == 5 | df$RACE == 6] <- 1
-df$RACE[df$RACE == 4 | df$RACE == 7 | df$RACE == 8 | df$RACE == 9]
+#df$RACE[df$RACE == 1 | df$RACE == 2 | df$RACE == 3 | df$RACE == 5 | df$RACE == 6] <- 1
+#df$RACE[df$RACE == 4 | df$RACE == 7 | df$RACE == 8 | df$RACE == 9]
 ```
 
 ```{r}
-df$RACE[is.na(df$RACE)] <- 0
+#df$RACE[is.na(df$RACE)] <- 0
 
 ```
 
 ```{r}
-df <- janitor::clean_names(df)
+#df <- janitor::clean_names(df)
 ```
 
 ```{r}
@@ -38,25 +35,24 @@ names (df)
 ```
 
 ```{r}
-df <- df %>%
-  mutate(
-    age_group = case_when(
-      age < 30 ~ "Under 30",
-      age >= 30 & age < 60 ~ "30-59",
+#df <- df %>%
+  #mutate(
+    #age_group = case_when(
+      age < 30 ~ "Under 30"
+      age >= 30 & age < 60 ~ "30-59"
       age >= 60 ~ "60+"
-    ),
-    sex = recode(as.character(sex),
-                 "1" = "Male",
-                 "2" = "Female")
-  )
+    
+   # sex = recode(as.character(sex),
+                 "1" = "Male"
+                 "2" = "Female"
+  
 
 ```
 
 ```{r}
-df_summary <- df %>%
-  group_by(sex, age_group) %>%
-  summarise(
-    mean_depression = mean(scl_dep, na.rm = TRUE),
-    count = n()
-  )
+#df_summary <- df %>%
+#group_by(sex, age_group) %>%
+  #summarise(
+    #mean_depression = mean(scl_dep, na.rm = TRUE)
+    #count = n()
 ```
