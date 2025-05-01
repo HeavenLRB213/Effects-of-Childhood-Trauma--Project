@@ -1,8 +1,10 @@
 ---
-title: "Working with data"
+title: "Working With Data"
 format: 
-html: 
-self contained: true
+ pdf:
+  number-sections: true
+  toc: true
+  pdf-engine: xelatex
 editor: visual
 ---
 
@@ -14,65 +16,227 @@ editor: visual
 
 ------------------------------------------------------------------------
 
+##Library
+
 ```{r}
 library(tidyverse)
-```
-
-```{r}
 library(descr)
-```
-
-```{r}
 library(knitr)
-```
-
-```{r}
 library(dplyr)
+library(haven)
+library(ggplot2)
+library(Hmisc)
+library(readr)
+library(car)
 ```
 
-```{r}
-library(haven)
-```
+##Data Set Load
 
 ```{r}
 file_path <- file.path("..", "data", "36168-0001-Data.sav")
 df <- read_sav(file_path)
 ```
 
-```{r}
-library(descr)
-```
-
-DATA TABLE
+##DATA TABLE
 
 ```{r}
 head(df)
 ```
 
-FREQ
+##FREQ
 
 ```{r}
-freq(as.ordered(df$SEX), plot = FALSE)
+freq(as.ordered(df$sex), plot = FALSE)
 ```
 
-```{r}
-freq(as.ordered(df$SEX), plot = FALSE)
-```
-
-This table shows that more female participants went through abuse that men.
+This table shows that more female participants went through abuse more than that of the men amount of men whpo participated.
 
 ```{r}
-freq(as.ordered(df$MOODDX), plot = FALSE)
+freq(as.ordered(df$mooddx), plot = FALSE)
 ```
 
 This table shows the amount of people with mood disorders and there are more people with than without.
 
 ```{r}
-freq(as.ordered(df$RACE), plot = FALSE)
+freq(as.ordered(df$race), plot = FALSE)
 ```
 
 This table shows the amount of white, black and other races that went through abuse. White participants were shown to be the ones to go through abuse.
 
+##Data Management
+
 ```{r}
+#df$race[df$race == 1 | df$race == 2 | df$race == 3 | df$race == 5 | df$race == 6] <- 1
+#df$race[df$race == 4 | df$race == 7 | df$race == 8 | df$race == 9]
+```
+
+```{r}
+df$RACE[is.na(df$RACE)] <- 0
+```
+
+```{r}
+df <- janitor::clean_names(df)
+```
+
+```{r}
+names (df)
+```
+
+```{r}
+#df <- df %>%
+  #age_group = case_when()
+      #age < 30 ~ "Under 30",
+      #age >= 30 & age < 60 ~ "30-59",
+      #age >= 60 ~ "60+"
+    #sex = recode(as.character(sex
+                 "1" = "Male"
+                 "2" = "Female"
+```
+
+```{r}
+#df_summary <- df %>%
+  #group_by(sex, age_group) %>%
+  #summarise(
+    #mean_depression = mean(scl_dep, na.rm = TRUE),
+    #count = n()
+```
+
+```{r}
+#df_summary <- df %>%
+  #group_by(sex, age_group) %>%
+  #summarise(
+    #mean_depression = mean(scl_dep, na.rm = TRUE),
+    #count = n(),
+    #.groups = "drop"
+```
+
+```{r plot_depression_by_age_sex}
+#ggplot(df_summary, aes(x = age_group, y = mean_depression, fill = sex)) +
+  #geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Mean Depression Scores by Age Group and Sex",
+    x = "Age Group",
+    y = "Mean Depression Score"
+  ) +
+  theme_minimal()
+```
+
+##Univariate
+First Graph representing race
+
+```{r}
+ggplot(df, aes(x = race)) + geom_bar()
+```
+
+```{r}
+ggplot(df, aes(x = age, y = scl_gsi)) +
+  geom_point(alpha = 0.6) +
+  labs(title = "Age vs. Global Severity Index (SCL-GSI)", x = "Age", y = "SCL-GSI") +
+  theme_minimal()
+```
+
+Second graph representing age
+
+```{r}
+ggplot(df, aes(x = age)) + geom_bar()
+```
+
+```{r}
+ggplot(df, aes(x = age, y = scl_gsi)) +
+  geom_point(alpha = 0.6) +
+  labs(title = "Age vs. Global Severity Index (SCL-GSI)", x = "Age", y = "SCL-GSI") +
+  theme_minimal()
+```
+
+## Chi-Squared
+
+```{r}
+table(df$sex)
+table(df$dx)
+```
+
+```{r}
+table(df$sex, df$dx)
+```
+
+```{r}
+chisq.test(table(df$sex, df$dx))
+```
+
+```{r}
+table(df$sex, df$abuse)
+chisq.test(table(df$sex, df$abuse))
 
 ```
+
+```{r}
+df <- df %>%
+  mutate(abuse = as.factor(abuse))
+
+```
+
+##T-Test
+
+```{r}
+t.test(age ~ sex, data = df)
+```
+
+```{r}
+df <- df %>%
+  mutate(
+    sex = as.factor(sex),
+    abuse = as.factor(abuse)
+  )
+```
+
+```{r}
+t.test(df$age, mu = 30)
+
+```
+
+```{r}
+ggplot(df, aes(x = age)) +
+  geom_histogram(binwidth = 2, fill = "#69b3a2", alpha = 0.7, color = "white") +
+  geom_vline(xintercept = 30, linetype = "dashed", color = "red", size = 1.2) +
+  labs(
+    title = "Age Distribution",
+    x = "Age",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+People affected by abuse mostly have effects ages 30 and 40.
+
+##ANOVA
+
+```{r}
+set.seed(123)
+```
+
+```{r}
+aov_age_sex <- aov(age ~ sex, data = df)
+```
+
+```{r}
+summary(aov_age_sex)
+```
+
+This shows that there is no significant correlation between sex and age of people affected by abuse.
+
+##Correlation
+
+```{r}
+cor.test(df$age, df$scl_gsi, use = "complete.obs")
+```
+
+```{r}
+ggplot(data = df, aes(x = age, y = scl_gsi)) + 
+  geom_point(color = "purple") +
+  theme_bw() +
+  labs(x = "Participant Age (years)", y = "Global Severity Index (scl_gsi)") +
+  stat_smooth(method = lm)
+
+```
+
+There's no real link between age and psychological distress

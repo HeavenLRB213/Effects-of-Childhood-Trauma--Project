@@ -31,7 +31,7 @@ df <- df %>%
 
 ```
 
-T-Test
+##T-Test
 
 ```{r}
 t.test(age ~ sex, data = df)
@@ -64,7 +64,7 @@ ggplot(df, aes(x = age)) +
 
 People affected by abuse mostly have effects ages 30 and 40.
 
-ANOVA
+##ANOVA
 
 ```{r}
 set.seed(123)
@@ -80,7 +80,7 @@ summary(aov_age_sex)
 
 This shows that there is no significant correlation between sex and age of people affected by abuse.
 
-Correlation
+##Correlation
 
 ```{r}
 cor.test(df$age, df$scl_gsi, use = "complete.obs")
